@@ -1,6 +1,7 @@
 package com.example.avtr.presentation.welcome
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -100,15 +101,27 @@ class SignInFragment : Fragment() {
     }
 
     private fun testMsNewUser(i:Int) {
-        if(pasList.size==4){
+        if(pasList.size<=4){
             var son=""
             for (i in pasList){
                 son=son+i
             }
             viewModel.addUser(UserModel(password = son.toInt(), userId = 1))
-        }else{
+        }else if(pasList.size==4){
             pasList.add(i)
+            when(pasList.size){
+                1->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
+                2->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
+                3->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
+                4->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
+            }
             Toast.makeText(requireActivity(), "$i qushildi listga", Toast.LENGTH_SHORT).show()
+        }else{
+            pasList.clear()
+            binding.cardOne.setCardBackgroundColor(Color.WHITE)
+            binding.cardTwo.setCardBackgroundColor(Color.WHITE)
+            binding.cardThree.setCardBackgroundColor(Color.WHITE)
+            binding.cardFour.setCardBackgroundColor(Color.WHITE)
         }
     }
 
@@ -124,9 +137,19 @@ class SignInFragment : Fragment() {
           }else{
               //clear password
               pasList.clear()
+              binding.cardOne.setCardBackgroundColor(Color.WHITE)
+              binding.cardTwo.setCardBackgroundColor(Color.WHITE)
+              binding.cardThree.setCardBackgroundColor(Color.WHITE)
+              binding.cardFour.setCardBackgroundColor(Color.WHITE)
           }
        }else{
            pasList.add(i)
+           when(pasList.size){
+               1->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
+               2->binding.cardTwo.setCardBackgroundColor(Color.YELLOW)
+               3->binding.cardThree.setCardBackgroundColor(Color.YELLOW)
+               4->binding.cardFour.setCardBackgroundColor(Color.YELLOW)
+           }
        }
     }
 

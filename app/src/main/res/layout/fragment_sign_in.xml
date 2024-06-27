@@ -31,11 +31,13 @@
         app:layout_constraintBottom_toTopOf="@id/guideline">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardOne"
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:cardCornerRadius="50dp" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardTwo"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
@@ -43,12 +45,14 @@
             app:cardCornerRadius="50dp" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardThree"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
             app:cardCornerRadius="50dp" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardFour"
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:cardCornerRadius="50dp" />
