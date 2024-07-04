@@ -10,7 +10,7 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addBase(userDbModel: UserDbModel)
 
-    @Query("SELECT userId FROM users where userId=1")
+    @Query("SELECT password FROM users where userId=1")
     fun getUserLocalPassword(): Int
 
     @Query("SELECT serverId FROM users where userId=1")

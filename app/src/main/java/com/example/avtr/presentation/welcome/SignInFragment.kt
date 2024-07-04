@@ -3,6 +3,7 @@ package com.example.avtr.presentation.welcome
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -94,7 +95,7 @@ class SignInFragment : Fragment() {
         binding.numNi.setOnClickListener {
             testMsNewUser(9)
         }
-        binding.numNi.setOnClickListener {
+        binding.numZero.setOnClickListener {
             testMsNewUser(0)
         }
 
@@ -126,23 +127,9 @@ class SignInFragment : Fragment() {
     }
 
     private fun testMsOldUser(i:Int) {
-       if(pasList.size==4){
-           var son=""
-           for (i in pasList){
-               son=son+i
-           }
-          if(viewModel.passwordUserTest(son.toInt())){
-          //new oynaga
-              Toast.makeText(requireActivity(), "Login", Toast.LENGTH_SHORT).show()
-          }else{
-              //clear password
-              pasList.clear()
-              binding.cardOne.setCardBackgroundColor(Color.WHITE)
-              binding.cardTwo.setCardBackgroundColor(Color.WHITE)
-              binding.cardThree.setCardBackgroundColor(Color.WHITE)
-              binding.cardFour.setCardBackgroundColor(Color.WHITE)
-          }
-       }else{
+
+
+           if(pasList.size<4){
            pasList.add(i)
            when(pasList.size){
                1->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
@@ -150,7 +137,22 @@ class SignInFragment : Fragment() {
                3->binding.cardThree.setCardBackgroundColor(Color.YELLOW)
                4->binding.cardFour.setCardBackgroundColor(Color.YELLOW)
            }
-       }
+           Toast.makeText(requireActivity(), "$i Bosildi listga", Toast.LENGTH_SHORT).show()
+       }else{
+               if(viewModel.passwordUserTest(pasList.toList())){
+                   //new oynaga
+                   Toast.makeText(requireActivity(), "Login", Toast.LENGTH_SHORT).show()
+               }else{
+                   //clear password
+                   Log.d("MY_TAG", "testMsOldUser: ${pasList.toList()} ${viewModel.getUserPasswordUsecase()}")
+                   pasList.clear()
+                   binding.cardOne.setCardBackgroundColor(Color.WHITE)
+                   binding.cardTwo.setCardBackgroundColor(Color.WHITE)
+                   binding.cardThree.setCardBackgroundColor(Color.WHITE)
+                   binding.cardFour.setCardBackgroundColor(Color.WHITE)
+
+               }
+           }
     }
 
     @SuppressLint("ResourceType")
@@ -189,7 +191,7 @@ class SignInFragment : Fragment() {
         binding.numNi.setOnClickListener {
             testMsOldUser(9)
         }
-        binding.numNi.setOnClickListener {
+        binding.numZero.setOnClickListener {
             testMsOldUser(0)
         }
 

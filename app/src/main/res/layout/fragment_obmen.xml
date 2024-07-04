@@ -29,8 +29,20 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ImageView
+                android:padding="10dp"
+                android:src="@drawable/uzb"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guideline7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
 
             <TextView
+                android:textSize="17dp"
+                android:gravity="center"
+                android:text="O`zbekistonga"
                 android:id="@+id/davlatOneText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/guideline7"
@@ -57,9 +69,19 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintTop_toBottomOf="@+id/davlatOne">
 
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/rus3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guideline8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline8"
@@ -68,6 +90,9 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.3" />
             <TextView
+                android:textSize="17sp"
+                android:gravity="center"
+                android:text="Rassiyaga"
                 android:id="@+id/davlatTwoText"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/guideline8"
