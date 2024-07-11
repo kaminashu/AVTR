@@ -2,6 +2,8 @@ package com.example.avtr.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.avtr.data.Imple
 import com.example.avtr.domain.entity.UserModel
 import com.example.avtr.domain.usecase.AddUserUsecase
@@ -11,24 +13,24 @@ import com.example.avtr.domain.usecase.IssRegistredUsecase
 class ViewModel(application: Application) : AndroidViewModel(application) {
     private val imple = Imple(application)
     private var addUserUsecase = AddUserUsecase(imple)
-     val getUserPasswordUsecase = GetUserPasswordUsecase(imple)
+    val getUserPasswordUsecase = GetUserPasswordUsecase(imple)
     private val issRegistredUsecase = IssRegistredUsecase(imple)
+    private val liveData = MutableLiveData<List<Int>>()
+    val psLiveData: LiveData<List<Int>> get() = liveData
     fun registered(): Boolean {
         return issRegistredUsecase()
     }
 
-    fun passwordUserTest(ps: List<Int>): Boolean {
+    fun passwordUserTest(): Int {
         val userPasswordUsecase = getUserPasswordUsecase()
-        val oneData = userPasswordUsecase / 1000 //2 345
-        val twoDatax = userPasswordUsecase % 1000
-        val twoData=twoDatax/ 100 // 3 45
-        val threeData = twoData / 10 // 4 5
-        val fourData = twoData % 10 // 4 5
-
-        return ps[0]==oneData
+        return userPasswordUsecase
     }
 
     fun addUser(userModel: UserModel) {
         addUserUsecase(userModel)
+    }
+
+    fun addListPassword(list: List<Int>) {
+        liveData.value = list.toList()
     }
 }

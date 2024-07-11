@@ -1,6 +1,7 @@
 package com.example.avtr.presentation.welcome
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.avtr.R
 import com.example.avtr.databinding.FragmentSignInBinding
 import com.example.avtr.domain.entity.UserModel
+import com.example.avtr.presentation.AsosiyActivity
 import com.example.avtr.presentation.ViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +37,7 @@ class SignInFragment : Fragment() {
     private var param2: String? = null
     private val viewModel by lazy { ViewModelProvider(this)[ViewModel::class.java] }
     private val pasList = ArrayList<Int>()
+
     private lateinit var binding: FragmentSignInBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +64,33 @@ class SignInFragment : Fragment() {
             oldUser()
         } else {
             newUser()
+        }
+        viewModel.psLiveData.observe(viewLifecycleOwner){
+            if(it.size > 3){
+                val passwordUserTest = viewModel.passwordUserTest()
+                val oneData = passwordUserTest / 1000 //2 345
+                val twoDatax = passwordUserTest % 1000
+                val twoData=twoDatax/ 100 // 3 45
+                val threeDataX=twoDatax % 100
+                val threeData = threeDataX / 10 // 4 5
+                val fourData = twoData % 10 // 4 5
+                Log.d("MY_TAG", "testMsOldUser: "+""+oneData+" "+twoData+" "+threeData+" "+fourData)
+
+                if (oneData==it.get(0) && twoData==it.get(1) && threeData==it.get(2) && fourData==it.get(3)){
+                    //new oynaga
+                   val intent=Intent(requireActivity(),AsosiyActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    //clear password
+                    Log.d("MY_TAG", "testMsOldUser: ${pasList.toList()} ${viewModel.getUserPasswordUsecase()}")
+                    pasList.clear()
+                    binding.cardOne.setCardBackgroundColor(Color.WHITE)
+                    binding.cardTwo.setCardBackgroundColor(Color.WHITE)
+                    binding.cardThree.setCardBackgroundColor(Color.WHITE)
+                    binding.cardFour.setCardBackgroundColor(Color.WHITE)
+                }
+
+            }
         }
     }
 
@@ -110,6 +143,7 @@ class SignInFragment : Fragment() {
             viewModel.addUser(UserModel(password = son.toInt(), userId = 1))
         }else if(pasList.size==4){
             pasList.add(i)
+
             when(pasList.size){
                 1->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
                 2->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
@@ -131,6 +165,7 @@ class SignInFragment : Fragment() {
 
            if(pasList.size<4){
            pasList.add(i)
+               viewModel.addListPassword(pasList)
            when(pasList.size){
                1->binding.cardOne.setCardBackgroundColor(Color.YELLOW)
                2->binding.cardTwo.setCardBackgroundColor(Color.YELLOW)
@@ -139,9 +174,29 @@ class SignInFragment : Fragment() {
            }
            Toast.makeText(requireActivity(), "$i Bosildi listga", Toast.LENGTH_SHORT).show()
        }else{
-               if(viewModel.passwordUserTest(pasList.toList())){
-                   //new oynaga
-                   Toast.makeText(requireActivity(), "Login", Toast.LENGTH_SHORT).show()
+               if(viewModel.passwordUserTest() > 0){
+                   val passwordUserTest = viewModel.passwordUserTest()
+                   val oneData = passwordUserTest / 1000 //2 345
+                   val twoDatax = passwordUserTest % 1000
+                   val twoData=twoDatax/ 100 // 3 45
+                   val threeDataX=twoDatax % 100
+                   val threeData = threeDataX / 10 // 4 5
+                   val fourData = twoData % 10 // 4 5
+                   Log.d("MY_TAG", "testMsOldUser: "+""+oneData+" "+twoData+" "+threeData+" "+fourData)
+
+                   if (oneData==pasList.get(0) && twoData==pasList.get(1) && threeData==pasList.get(2) && fourData==pasList.get(3)){
+                       //new oynaga
+                       Toast.makeText(requireActivity(), "Login", Toast.LENGTH_SHORT).show()
+                   }else{
+                       //clear password
+                       Log.d("MY_TAG", "testMsOldUser: ${pasList.toList()} ${viewModel.getUserPasswordUsecase()}")
+                       pasList.clear()
+                       binding.cardOne.setCardBackgroundColor(Color.WHITE)
+                       binding.cardTwo.setCardBackgroundColor(Color.WHITE)
+                       binding.cardThree.setCardBackgroundColor(Color.WHITE)
+                       binding.cardFour.setCardBackgroundColor(Color.WHITE)
+                   }
+
                }else{
                    //clear password
                    Log.d("MY_TAG", "testMsOldUser: ${pasList.toList()} ${viewModel.getUserPasswordUsecase()}")
@@ -154,6 +209,7 @@ class SignInFragment : Fragment() {
                }
            }
     }
+
 
     @SuppressLint("ResourceType")
     private fun oldUser() {
